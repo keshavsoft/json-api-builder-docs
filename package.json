@@ -1,0 +1,27 @@
+{
+  "name": "json-api-builder-docs",
+  "version": "1.0.0",
+  "description": "Showcase website and documentation portal for the JSON API Builder ecosystem.",
+  "type": "module",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "json-api-builder",
+    "json-api-builder-docs",
+    "website",
+    "showcase",
+    "documentation"
+  ],
+  "author": "KeshavSoft",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavsoft/json-api-builder-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keshavsoft/json-api-builder-docs/issues"
+  },
+  "homepage": "https://keshavsoft.github.io/json-api-builder-docs/"
+}

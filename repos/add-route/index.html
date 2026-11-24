@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>json-api-builder-add-route — Localized Subtree Generator & AST Router Hooker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              900: '#78350f',
+              950: '#451a03'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-zinc-950 text-zinc-100 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+
+  <!-- Top Navigation -->
+  <nav class="border-b border-zinc-800 bg-zinc-900/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5 shrink-0">
+        <a href="../../index.html" class="flex items-center gap-2 text-zinc-400 hover:text-white transition font-mono text-xs">
+          <i class="bi bi-arrow-left"></i>
+          <span>Website Home</span>
+        </a>
+        <span class="text-zinc-600">/</span>
+        <div class="flex items-center gap-2">
+          <i class="bi bi-node-plus-fill text-emerald-400 text-base"></i>
+          <span class="font-bold text-xs tracking-wider uppercase text-zinc-200">Repo: json-api-builder-add-route</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs font-mono">
+        <a href="../create-endpoints/index.html" class="text-zinc-400 hover:text-zinc-200 hidden sm:inline">Prev: create-endpoints</a>
+        <a href="../orchestrator/index.html" class="text-amber-400 hover:text-amber-300 flex items-center gap-1">
+          <span>Next: orchestrator</span>
+          <i class="bi bi-chevron-right"></i>
+        </a>
+        <a href="https://github.com/keshavsoft/json-api-builder-add-route" target="_blank" class="px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white flex items-center gap-1.5 transition">
+          <i class="bi bi-github"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="border-b border-zinc-800/80 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.15),rgba(255,255,255,0))] py-14 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>The Surgical Additive Engine</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+        json-api-builder-add-route
+      </h1>
+      <p class="text-base sm:text-lg text-zinc-400 max-w-3xl leading-relaxed">
+        Surgically generates new route subtrees (e.g. <code class="text-emerald-300 font-mono">v2/</code>) and mounts them into parent routers with ESTree AST precision—without touching <code class="text-zinc-200 font-mono">app.js</code> or older versions (<code class="text-zinc-200 font-mono">v1/</code>).
+      </p>
+
+      <!-- Terminal Command Pill -->
+      <div class="w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-xl p-3 flex items-center justify-between text-left font-mono text-xs text-zinc-300 shadow-xl">
+        <div class="flex items-center gap-2 overflow-x-auto">
+          <span class="text-emerald-400">$</span>
+          <span>cd api &amp;&amp; npx --yes json-api-builder-add-route@latest v2.json</span>
+        </div>
+        <button onclick="navigator.clipboard.writeText('cd api && npx --yes json-api-builder-add-route@latest v2.json')" class="hover:text-white text-zinc-400 transition ml-3 px-2 py-1 bg-zinc-800 rounded hover:bg-zinc-700" title="Copy command">
+          <i class="bi bi-clipboard"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-10 space-y-16">
+
+    <!-- Section 1: The Mission & Problem It Serves -->
+    <section class="space-y-6">
+      <div class="border-b border-zinc-800/80 pb-4">
+        <div class="text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">01 / The Mission</div>
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <i class="bi bi-shield-check text-emerald-400"></i>
+          <span>How This Repo Serves the Ecosystem</span>
+        </h2>
+        <p class="text-sm text-zinc-400 mt-1">
+          Why full project scaffolding is great on Day 1, but disastrous on Day 100.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-red-950/60 space-y-3">
+          <div class="flex items-center gap-2 text-red-400 text-sm font-semibold font-mono">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span>The Greenfield Danger</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            When you run a full scaffolding generator, it generates <code class="text-zinc-200">app.js</code>, setups middlewares, and builds directory trees. But once your API is live in production:
+          </p>
+          <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+            <li><code class="text-zinc-300">app.js</code> has custom auth, rate-limiting, and error handlers.</li>
+            <li><code class="text-zinc-300">v1/</code> endpoints are serving live production customers.</li>
+            <li>Re-running an orchestrator would clobber custom configs or wipe existing endpoints!</li>
+          </ul>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-emerald-950/60 space-y-3">
+          <div class="flex items-center gap-2 text-emerald-400 text-sm font-semibold font-mono">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>The Surgical Solution</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            <code class="text-emerald-400 font-mono">json-api-builder-add-route</code> runs localized directly inside your target router directory (e.g. <code class="text-zinc-200">api/</code>).
+          </p>
+          <ul class="text-xs text-zinc-400 space-y-1.5 list-disc list-inside">
+            <li>It only creates the new route subtree folder (<code class="text-emerald-300">v2/</code>).</li>
+            <li>It safely inspects and injects the route mount into <code class="text-zinc-300">api/routes.js</code> via AST.</li>
+            <li><strong class="text-white">Zero touch</strong> to <code class="text-zinc-300">app.js</code> and older versions (<code class="text-zinc-300">v1/</code>).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Technical Deep Dive: Why AST & Acorn -->
+    <section class="space-y-6">
+      <div class="border-b border-zinc-800/80 pb-4">
+        <div class="text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">02 / Technical Architecture</div>
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <i class="bi bi-cpu text-emerald-400"></i>
+          <span>The AST Engine: Zero-Regex Manipulation</span>
+        </h2>
+        <p class="text-sm text-zinc-400 mt-1">
+          Why string regex replacement fails in JavaScript code modification, and how ESTree AST guarantees 100% syntactical safety.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="p-5 rounded-2xl bg-zinc-900/50 border border-zinc-800 space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-mono text-sm font-bold">1</div>
+          <h3 class="font-bold text-white text-sm">Acorn ESTree Parsing</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            The existing parent router (<code class="text-zinc-200">routes.js</code>) is read into memory and parsed using <code class="text-emerald-300">acorn.parse(source, { ecmaVersion: "latest", sourceType: "module" })</code>. It creates a complete Abstract Syntax Tree of every statement.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-zinc-900/50 border border-zinc-800 space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-mono text-sm font-bold">2</div>
+          <h3 class="font-bold text-white text-sm">Dynamic Router Detection</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            The AST scanner iterates through expressions to detect the router variable name. Whether the parent uses <code class="text-zinc-200">const routes = new Hono()</code> or <code class="text-zinc-200">const app = new Hono()</code>, it adapts automatically.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-zinc-900/50 border border-zinc-800 space-y-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-mono text-sm font-bold">3</div>
+          <h3 class="font-bold text-white text-sm">Idempotent Astring Synthesis</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            If <code class="text-zinc-200">v2</code> is already imported, it terminates without re-injecting. If missing, it constructs AST nodes for the import and <code class="text-zinc-200">routes.route("/v2", v2Routes)</code>, then serializes via <code class="text-emerald-300">astring.generate()</code>.
+          </p>
+        </div>
+      </div>
+
+      <!-- AST Inspection Visual Code Block -->
+      <div class="bg-zinc-950 p-6 rounded-2xl border border-zinc-800 font-mono text-xs text-zinc-300 overflow-x-auto space-y-3">
+        <div class="text-zinc-500 font-sans text-xs pb-2 border-b border-zinc-800 flex items-center justify-between">
+          <span>AST Node Structure Before and After Hooking</span>
+          <span class="text-emerald-400 font-mono">ESTree Specification</span>
+        </div>
+        <pre><code><span class="text-zinc-500">// 1. Existing api/routes.js (AST input)</span>
+<span class="text-purple-400">import</span> { Hono } <span class="text-purple-400">from</span> <span class="text-emerald-400">"hono"</span>;
+<span class="text-purple-400">import</span> v1Routes <span class="text-purple-400">from</span> <span class="text-emerald-400">"./v1/routes.js"</span>;
+<span class="text-purple-400">const</span> routes = <span class="text-blue-400">new Hono</span>();
+routes.<span class="text-blue-400">route</span>(<span class="text-emerald-400">"/v1"</span>, v1Routes);
+<span class="text-purple-400">export default</span> routes;
+
+<span class="text-zinc-500">// 2. AST Transformation injects new CallExpression before export</span>
+<span class="text-emerald-400">+ import v2Routes from "./v2/routes.js";</span>
+<span class="text-zinc-400">const routes = new Hono();</span>
+<span class="text-zinc-400">routes.route("/v1", v1Routes);</span>
+<span class="text-emerald-400">+ routes.route("/v2", v2Routes);</span>
+<span class="text-purple-400">export default</span> routes;</code></pre>
+      </div>
+    </section>
+
+    <!-- Section 3: Real-Time Enterprise Usage Scenarios -->
+    <section class="space-y-6">
+      <div class="border-b border-zinc-800/80 pb-4">
+        <div class="text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">03 / Production Reality</div>
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <i class="bi bi-briefcase-fill text-emerald-400"></i>
+          <span>Real-Time Enterprise Scenarios</span>
+        </h2>
+        <p class="text-sm text-zinc-400 mt-1">
+          How engineering teams use <code class="text-zinc-200 font-mono">json-api-builder-add-route</code> in daily production workflows.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
+          <div class="text-emerald-400 font-bold text-sm flex items-center gap-2">
+            <i class="bi bi-arrow-repeat"></i>
+            <span>Multi-Version API Lifecycle</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            A healthcare app has 50,000 active mobile users on <code class="text-zinc-300">/api/v1/clinics</code>. The product team needs a new schema for <code class="text-zinc-300">/api/v2/appointments</code>. <code class="text-emerald-300">add-route</code> provisions v2 without altering or reloading the v1 runtime logic.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
+          <div class="text-emerald-400 font-bold text-sm flex items-center gap-2">
+            <i class="bi bi-people-fill"></i>
+            <span>Autonomous Feature Teams</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Team Alpha owns appointments; Team Beta owns doctors. Both work on the same monorepo. Instead of merge conflicts inside huge monolithic router files, each team generates localized subtrees with clean automated AST mounting.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-3">
+          <div class="text-emerald-400 font-bold text-sm flex items-center gap-2">
+            <i class="bi bi-git"></i>
+            <span>CI/CD Automated Route Deployments</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            When a database migration or OpenAPI schema updates in git, a GitHub Action runs <code class="text-zinc-200">npx json-api-builder-add-route</code> to generate the fresh endpoints and commits the diff without human intervention.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Input / Output Contract -->
+    <section class="space-y-6">
+      <div class="border-b border-zinc-800/80 pb-4">
+        <div class="text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider mb-1">04 / Contract</div>
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <i class="bi bi-file-earmark-code text-emerald-400"></i>
+          <span>Input Specification &amp; Output Artifacts</span>
+        </h2>
+        <p class="text-sm text-zinc-400 mt-1">
+          Exact schema specifications and output file boundaries.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
+        <div>
+          <div class="text-zinc-400 mb-2 font-sans font-bold">Input Spec File: <code class="text-amber-300">api/v2.json</code></div>
+          <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-zinc-300 overflow-x-auto max-h-72">
+            <pre><code>{
+  <span class="text-amber-400">"name"</span>: <span class="text-emerald-400">"v2"</span>,
+  <span class="text-amber-400">"routes"</span>: {
+    <span class="text-amber-400">"appointments"</span>: {
+      <span class="text-amber-400">"resource"</span>: <span class="text-emerald-400">"appointments"</span>,
+      <span class="text-amber-400">"idField"</span>: <span class="text-emerald-400">"id"</span>,
+      <span class="text-amber-400">"dataFile"</span>: <span class="text-emerald-400">"../../data/appointments.json"</span>
+    }
+  }
+}</code></pre>
+          </div>
+        </div>
+
+        <div>
+          <div class="text-zinc-400 mb-2 font-sans font-bold">Generated Output Artifacts:</div>
+          <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-emerald-300 overflow-x-auto max-h-72">
+            <pre><code>api/
+├── routes.js               <span class="text-zinc-500">&lt;-- AST Hooked (v1 + v2)</span>
+├── v1/                     <span class="text-zinc-500">&lt;-- 100% UNTOUCHED</span>
+│   ├── routes.js
+│   └── clinics/
+└── v2/                     <span class="text-emerald-400 font-bold">&lt;-- GENERATED SUBTREE</span>
+    ├── routes.js
+    └── appointments/
+        └── routes.js       <span class="text-zinc-500">&lt;-- Full REST CRUD Handlers</span>
+data/
+└── appointments.json       <span class="text-zinc-500">&lt;-- Initialized DB fixture</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-800 bg-zinc-900/80 py-8 px-4 text-center text-xs text-zinc-500 font-mono">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <span>© 2026 </span>
+        <a href="https://github.com/keshavsoft" class="text-zinc-400 hover:text-amber-400 transition">KeshavSoft</a>
+        <span> — Declarative JSON API Builder Ecosystem</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../../index.html" class="hover:text-zinc-300 transition">Website Home</a>
+        <a href="../orchestrator/index.html" class="hover:text-zinc-300 transition">Orchestrator</a>
+        <a href="https://github.com/keshavsoft/json-api-builder-add-route" class="hover:text-zinc-300 transition">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
